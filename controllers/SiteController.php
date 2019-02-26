@@ -67,6 +67,12 @@ class SiteController extends Controller
     
     public function actionRegistration($login = "", $password = "", $password2 = "") {
         $model = new RegistrationForm();
+        $request = \Yii::$app->request;
+        if ($request->isPost) {
+            //$model->attributes = $request->post()['RegistrationForm'];
+            $model->load(\Yii::$app->request->post());
+            $model->validate();
+        }
         return $this->render('registration', ['model' => $model]);
     }
     
