@@ -10,6 +10,7 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\RegistrationForm;
+use app\models\Users;
 
 class SiteController extends Controller
 {
@@ -69,11 +70,21 @@ class SiteController extends Controller
         $model = new RegistrationForm();
         $request = \Yii::$app->request;
         if ($request->isPost) {
-            //$model->attributes = $request->post()['RegistrationForm'];
             $model->load(\Yii::$app->request->post());
-            $model->validate();
+            if ($model->validate()) {
+                $usersModel = new Users();
+                $usersModel->login = $model->login;
+                $usersModel->password = Yii::$app->getSecurity()->generatePasswordHash($model->password);
+                if ($usersModel->save()) {
+                    return $this->redirect(array('site/success_registration'));
+                }
+            }
         }
         return $this->render('registration', ['model' => $model]);
+    }
+    
+    public function actionSuccess_registration() {
+        return $this->render('success_registration');
     }
     
     public function actionTest() {
@@ -97,7 +108,7 @@ class SiteController extends Controller
         }
 
         $model->password = '';
-        return $this->render('login', [
+        return $this->render('login_new', [
             'model' => $model,
         ]);
     }
