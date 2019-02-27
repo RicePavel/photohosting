@@ -11,6 +11,7 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\RegistrationForm;
 use app\models\Users;
+use app\models\FileUploadForm;
 
 class SiteController extends Controller
 {
@@ -63,8 +64,16 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $model = new \app\models\FileUploadForm();
+        if (\Yii::$app->request->isPost) {
+            $post = \Yii::$app->request->post();
+            $files = \yii\web\UploadedFile::getInstances($model, 'imageFiles');
+            $model->imageFiles = $files;
+            $model->upload();
+        }
+        return $this->render('index', ['model' => $model]);
     }
+    
     
     public function actionRegistration($login = "", $password = "", $password2 = "") {
         $model = new RegistrationForm();
