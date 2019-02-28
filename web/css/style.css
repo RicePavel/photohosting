@@ -8,3 +8,18 @@
     max-width: 500px;
     max-height: 500px;
 }
+
+.indexImageDiv {
+    float: left;
+    overflow: hidden;
+    width: 210px;
+    height: 250px;
+    margin: 10px;
+    padding: 5px;
+    border: 1px solid gray;
+}
+
+.indexImageDiv div {
+    max-width: 200px;
+    max-height: 200px;
+}

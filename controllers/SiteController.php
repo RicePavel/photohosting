@@ -66,20 +66,12 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex($searchString = "")
     {
         $baseUrl = $this->getBaseUrl();
-          
         $model = new \app\models\FileUploadForm();
-        /*
-        if (\Yii::$app->request->isPost) {
-            $post = \Yii::$app->request->post();
-            $model->imageFiles = \yii\web\UploadedFile::getInstances($model, 'imageFiles');;
-            $model->upload();
-        }
-        */
         
-        $files = Files::getImages(\Yii::$app->user->getId());
+        $files = Files::getImages(\Yii::$app->user->getId(), $searchString);
         return $this->render('index', ['model' => $model, 'files' => $files, 'baseUrl' => $baseUrl]);
     }
     
@@ -124,7 +116,7 @@ class SiteController extends Controller
         return $this->render('edit_image', ['file' => $file, 'baseUrl' => $baseUrl]);
     }
     
-    public function actionDelete_image() {
+    public function actionDelete_image() {        
         $file_id = \Yii::$app->request->post('file_id');
         $file = Files::getOneImage($file_id);
         $obj = UploadedFiles::deleteFile($file_id);
