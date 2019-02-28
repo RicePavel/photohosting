@@ -10,7 +10,7 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\RegistrationForm;
-use app\models\Users;
+use app\models\ar\Users;
 use app\models\FileUploadForm;
 use app\models\ar\Files;
 
