@@ -12,6 +12,7 @@ use app\models\ContactForm;
 use app\models\RegistrationForm;
 use app\models\Users;
 use app\models\FileUploadForm;
+use app\models\ar\Files;
 
 class SiteController extends Controller
 {
@@ -64,14 +65,22 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        $webUrl = \Yii::getAlias('@web');
+        $pos = strrpos($webUrl, 'web');
+        $baseUrl = '';
+        if ($pos >= 0) {
+            $baseUrl = substr($webUrl, 0, $pos);
+        }
+        
         $model = new \app\models\FileUploadForm();
         if (\Yii::$app->request->isPost) {
             $post = \Yii::$app->request->post();
-            $files = \yii\web\UploadedFile::getInstances($model, 'imageFiles');
-            $model->imageFiles = $files;
+            $model->imageFiles = \yii\web\UploadedFile::getInstances($model, 'imageFiles');;
             $model->upload();
         }
-        return $this->render('index', ['model' => $model]);
+        
+        $files = Files::getImages(\Yii::$app->user->getId());
+        return $this->render('index', ['model' => $model, 'files' => $files, 'baseUrl' => $baseUrl]);
     }
     
     

@@ -3,13 +3,13 @@
 /* @var $this yii\web\View */
 
 use yii\widgets\ActiveForm;
+use app\models\FileUploadForm;
 
 $this->title = 'My Yii Application';
 ?>
 <div class="site-index">
 
- 
-
+   
     <div class="body-content">
 
         <div class="row">
@@ -24,5 +24,14 @@ $this->title = 'My Yii Application';
             
         </div>
 
+        <?php 
+            foreach ($files as $file) {
+                $path = $baseUrl . '/' . FileUploadForm::UPLOAD_DIR . '/' . $file->name;
+        ?>
+                <img src='<?= $path ?>' />
+        <?php
+            }
+        ?>
+        
     </div>
 </div>

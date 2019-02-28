@@ -9,25 +9,22 @@ use app\models\ar\Files;
 
 class FileUploadForm extends Model {
     
+    const UPLOAD_DIR = 'uploads';
+    
     /**
      * @var UploadedFile[]
      */
     public $imageFiles;
     
     public function rules() {
-        /*
         return [
-            [['imageFiles'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg']
-        ];
-         */
-        return [
-            [['imageFiles'], 'file', 'maxFiles' => 4]
+            [['imageFiles'], 'file', 'maxFiles' => 4, 'extensions' => 'png, jpg']
         ];
     }
     
     public function upload() {
         if ($this->validate()) {
-            $uploadDirPath = \Yii::getAlias('@app') . '\uploads';
+            $uploadDirPath = \Yii::getAlias('@app') . '\\' . self::UPLOAD_DIR;
             if (!file_exists($uploadDirPath)) {
                 $ok = FileHelper::createDirectory($uploadDirPath);
                 if (!$ok) {
@@ -48,7 +45,7 @@ class FileUploadForm extends Model {
                     $this->addErrors($fileAr->getErrors());
                     return false;
                 }
-                $fullPath = \Yii::getAlias('@app') . '\uploads\\' . $fileName;
+                $fullPath = \Yii::getAlias('@app') . '\\' . self::UPLOAD_DIR . '\\' . $fileName;
                 $ok = $file->saveAs($fullPath);
                 if (!$ok) {
                     $this->addError('imageFiles', 'Системная ошибка');

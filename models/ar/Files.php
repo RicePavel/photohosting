@@ -11,4 +11,9 @@ class Files extends ActiveRecord {
         return '{{files}}';
     }
     
+    public static function getImages($userId) {
+        $files = Files::find()->where(['user_id' => $userId])->all();
+        return $files;
+    }
+    
 }
