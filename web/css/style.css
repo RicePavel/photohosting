@@ -12,14 +12,31 @@
 .indexImageDiv {
     float: left;
     overflow: hidden;
-    width: 210px;
-    height: 250px;
-    margin: 10px;
+    width: 220px;
+    height: 260px;
+    margin: 5px;
     padding: 5px;
     border: 1px solid gray;
+}
+
+.indexImageDiv.selected {
+    background: #e2e2e2;
 }
 
 .indexImageDiv div {
     max-width: 200px;
     max-height: 200px;
+}
+.multipleDeleteInput {
+    width: 15px;
+    height: 15px;
+}
+
+.searchFormDiv {
+    float: left;
+}
+
+#multipleDeleteForm {
+    margin-left: 300px;
+    display: none;
 }

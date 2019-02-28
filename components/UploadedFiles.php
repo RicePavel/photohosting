@@ -24,5 +24,19 @@ class UploadedFiles {
         return $return;
     }
     
+    public static function deleteFiles($fileIds) {
+        $ok = true;
+        $error = '';
+        foreach ($fileIds as $fileId) {
+            $result = self::deleteFile($fileId);
+            if (!$result['status']) {
+                $ok = false;
+                $error = $result['error'];
+                break;
+            }
+        }
+        return ['status' => $ok, 'error' => $error];
+    }
+    
 }
 

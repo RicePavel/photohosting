@@ -30,7 +30,8 @@ $this->title = 'My Yii Application';
                     
                     <a href='<?= Url::to(['site/edit_image', 'file_id' => $file->file_id]) ?>' >Редактировать</a>
                     
-                    <?php $form = ActiveForm::begin(['action' => Url::to(['site/delete_image'])]) ?>
+                    <?php $form = ActiveForm::begin(['action' => Url::to(['site/delete_image']),
+                        'options' => ['class' => 'delete_form']]) ?>
                         <input type='hidden' name='file_id' value='<?= $file->file_id ?>' />
                         <button>Удалить</button>
                     <?php ActiveForm::end() ?>

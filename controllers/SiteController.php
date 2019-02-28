@@ -39,7 +39,8 @@ class SiteController extends Controller
                 'actions' => [
                     'logout' => ['post'],
                     'delete_image' => ['post'],
-                    'upload' => ['post']
+                    'upload' => ['post'],
+                    'multiple_delete' => ['post']
                 ],
             ],
         ];
@@ -118,8 +119,22 @@ class SiteController extends Controller
     
     public function actionDelete_image() {        
         $file_id = \Yii::$app->request->post('file_id');
-        $file = Files::getOneImage($file_id);
         $obj = UploadedFiles::deleteFile($file_id);
+        $error = '';
+        if ($obj['status']) {
+            return $this->redirect(['site/index']);
+        } else {
+            $error = $obj['error'];
+        }
+        if ($error) {
+            Yii::$app->session->setFlash('error', $error);
+        }
+        $this->redirect(['site/view_image', 'file_id' => $file_id]);
+    }
+    
+    public function actionMultiple_delete() {
+        $files = \Yii::$app->request->post('files');
+        $obj = UploadedFiles::deleteFiles($files);
         $error = '';
         if ($obj['status']) {
             return $this->redirect(['site/index']);
