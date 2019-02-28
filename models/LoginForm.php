@@ -34,8 +34,7 @@ class LoginForm extends Model
     {
         return [
             // username and password are both required
-            //[['username', 'password'], 'required', 'message' => 'Обязательное поле'],
-            [['username', 'password'], 'required', 'message' => Yii::t('app', 'Required field')],
+            [['username', 'password'], 'required'],
             // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
             // password is validated by validatePassword()

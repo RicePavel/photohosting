@@ -22,7 +22,7 @@ class FileUploadForm extends Model {
         ];
     }
     
-    public function upload() {
+    public function upload() {        
         if ($this->validate()) {
             $uploadDirPath = \Yii::getAlias('@app') . '\\' . self::UPLOAD_DIR;
             if (!file_exists($uploadDirPath)) {
@@ -33,7 +33,7 @@ class FileUploadForm extends Model {
                 }
             }
             foreach ($this->imageFiles as $file) {
-                $fileName = 'file_' . mktime() . '.' . $file->getExtension();
+                $fileName = 'file_' . uniqid("", true) . '.' . $file->getExtension();
                 $fileUserName = $file->getBaseName() . '.' . $file->getExtension();
                 $caption = $file->getBaseName();
                 $userId = \Yii::$app->user->getId();

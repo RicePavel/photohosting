@@ -21,7 +21,8 @@ class Files extends ActiveRecord {
     public function rules() {
         return [
             [['caption', 'description'], 'safe'],
-            ['caption', 'string', 'length' => [0, 255]]
+            [['caption', 'user_name', 'name'], 'string', 'length' => [0, 255]],
+            [['user_id', 'name', 'user_name'], 'required']
         ];
     }
     
@@ -33,5 +34,6 @@ class Files extends ActiveRecord {
     public static function getOneImage($fileId) {
         return Files::find()->where(['file_id' => $fileId])->one();
     }
+    
     
 }

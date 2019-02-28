@@ -10,12 +10,17 @@ $this->title = 'My Yii Application';
 ?>
 <div class="site-index">
 
-   
+    <?php if (Yii::$app->session->hasFlash('error')) { ?>
+        <div class='alert'>
+            <?= Yii::$app->session->getFlash('error') ?>
+        </div>
+    <?php } ?>
+    
     <div class="body-content">
 
         <div class="row">
             
-            <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
+            <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data'], 'action' => Url::to(['site/upload'])]); ?>
             
                 <?= $form->field($model, 'imageFiles[]')->fileInput(['multiple' => true])->label(false) ?>
             

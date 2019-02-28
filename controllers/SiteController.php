@@ -13,6 +13,7 @@ use app\models\RegistrationForm;
 use app\models\ar\Users;
 use app\models\FileUploadForm;
 use app\models\ar\Files;
+use app\components\UploadedFiles;
 
 class SiteController extends Controller
 {
@@ -37,6 +38,8 @@ class SiteController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'logout' => ['post'],
+                    'delete_image' => ['post'],
+                    'upload' => ['post']
                 ],
             ],
         ];
@@ -68,14 +71,26 @@ class SiteController extends Controller
         $baseUrl = $this->getBaseUrl();
           
         $model = new \app\models\FileUploadForm();
+        /*
         if (\Yii::$app->request->isPost) {
             $post = \Yii::$app->request->post();
             $model->imageFiles = \yii\web\UploadedFile::getInstances($model, 'imageFiles');;
             $model->upload();
         }
+        */
         
         $files = Files::getImages(\Yii::$app->user->getId());
         return $this->render('index', ['model' => $model, 'files' => $files, 'baseUrl' => $baseUrl]);
+    }
+    
+    public function actionUpload() {
+       $model = new \app\models\FileUploadForm();
+       $model->imageFiles = \yii\web\UploadedFile::getInstances($model, 'imageFiles');;
+       $ok = $model->upload(); 
+       if (!$ok) {
+           \Yii::$app->session->setFlash('error', implode(', ', $model->getErrorSummary(true)));
+       }
+       $this->redirect(['site/index']);
     }
     
     private function getBaseUrl() {
@@ -112,17 +127,16 @@ class SiteController extends Controller
     public function actionDelete_image() {
         $file_id = \Yii::$app->request->post('file_id');
         $file = Files::getOneImage($file_id);
-        if (\Yii::$app->request->isPost) {
-            $ok = $file->delete();
-            if ($ok) {
-                return $this->redirect(['site/index']);
-            } else {
-                $error = implode(',', $file->errors);
-            }
+        $obj = UploadedFiles::deleteFile($file_id);
+        $error = '';
+        if ($obj['status']) {
+            return $this->redirect(['site/index']);
         } else {
-            $error = 'Запрос должен быть POST';
+            $error = $obj['error'];
         }
-        Yii::$app->session->setFlash('error', $error);
+        if ($error) {
+            Yii::$app->session->setFlash('error', $error);
+        }
         $this->redirect(['site/view_image', 'file_id' => $file_id]);
     }
     

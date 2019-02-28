@@ -21,9 +21,9 @@ class RegistrationForm extends Model
     public function rules() {
         return [
             [['login', 'password', 'password2'], 'safe'],
-            [['login'], 'email', 'message' => Yii::t('app', 'Enter a valid email')],
-            [['login', 'password', 'password2'], 'string', 'length' => [4], 'tooShort' => Yii::t('app', 'At least {number} symbols', array('number' => 4))],
-            [['login', 'password', 'password2'], 'required', 'message' => Yii::t('app', 'Required field')],
+            [['login'], 'email'],
+            [['login', 'password', 'password2'], 'string', 'length' => [4]],
+            [['login', 'password', 'password2'], 'required'],
             [['password', 'password2'], function() {
                 if ($this->password !== $this->password2) {
                     $this->addErrors(['password2' => Yii::t('app', 'Passwords do not match')]);

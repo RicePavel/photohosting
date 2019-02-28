@@ -12,12 +12,6 @@ $this->title = 'My Yii Application';
 
    
     <div class="body-content">
-
-        <?php if (Yii::$app->session->hasFlash('error')) { ?>
-            <div class='alert'>
-                <?= Yii::$app->session->getFlash('error') ?>
-            </div>
-        <?php } ?>
         
         <?php 
           

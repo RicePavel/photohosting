@@ -16,6 +16,13 @@ class Users extends ActiveRecord implements \yii\web\IdentityInterface {
     public static function tableName() {
         return '{{users}}';
     }
+    
+    public function rules() {
+        return [
+            [['login', 'password'], 'required'],
+            [['login', 'password'], 'string', 'length' => [0, 255]]
+        ];
+    }
 
     public function getAuthKey(): string {
         return $this->auth_key;
