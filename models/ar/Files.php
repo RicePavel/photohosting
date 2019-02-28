@@ -11,9 +11,27 @@ class Files extends ActiveRecord {
         return '{{files}}';
     }
     
+    public function attributeLabels() {
+        return [
+            'caption' => 'Заголовок',
+            'description' => 'Описание'
+        ];
+    }
+    
+    public function rules() {
+        return [
+            [['caption', 'description'], 'safe'],
+            ['caption', 'string', 'length' => [0, 255]]
+        ];
+    }
+    
     public static function getImages($userId) {
         $files = Files::find()->where(['user_id' => $userId])->all();
         return $files;
+    }
+    
+    public static function getOneImage($fileId) {
+        return Files::find()->where(['file_id' => $fileId])->one();
     }
     
 }

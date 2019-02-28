@@ -65,13 +65,8 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $webUrl = \Yii::getAlias('@web');
-        $pos = strrpos($webUrl, 'web');
-        $baseUrl = '';
-        if ($pos >= 0) {
-            $baseUrl = substr($webUrl, 0, $pos);
-        }
-        
+        $baseUrl = $this->getBaseUrl();
+          
         $model = new \app\models\FileUploadForm();
         if (\Yii::$app->request->isPost) {
             $post = \Yii::$app->request->post();
@@ -83,6 +78,53 @@ class SiteController extends Controller
         return $this->render('index', ['model' => $model, 'files' => $files, 'baseUrl' => $baseUrl]);
     }
     
+    private function getBaseUrl() {
+        $webUrl = \Yii::getAlias('@web');
+        $pos = strrpos($webUrl, 'web');
+        $baseUrl = '';
+        if ($pos >= 0) {
+            $baseUrl = substr($webUrl, 0, $pos);
+        }
+        return $baseUrl;
+    }
+    
+    public function actionView_image($file_id) {
+        $baseUrl = $this->getBaseUrl();
+        $file = Files::getOneImage($file_id);
+        return $this->render('view_image', ['file' => $file, 'baseUrl' => $baseUrl]);
+    }
+    
+    public function actionEdit_image($file_id) {
+        $baseUrl = $this->getBaseUrl();
+        $file = Files::getOneImage($file_id);
+        
+        if (\Yii::$app->request->isPost) {
+           $file->load(\Yii::$app->request->post());
+           $ok = $file->save();
+           if ($ok) {
+               return $this->redirect(['site/view_image', 'file_id' => $file_id]);
+           }
+        }
+        
+        return $this->render('edit_image', ['file' => $file, 'baseUrl' => $baseUrl]);
+    }
+    
+    public function actionDelete_image() {
+        $file_id = \Yii::$app->request->post('file_id');
+        $file = Files::getOneImage($file_id);
+        if (\Yii::$app->request->isPost) {
+            $ok = $file->delete();
+            if ($ok) {
+                return $this->redirect(['site/index']);
+            } else {
+                $error = implode(',', $file->errors);
+            }
+        } else {
+            $error = 'Запрос должен быть POST';
+        }
+        Yii::$app->session->setFlash('error', $error);
+        $this->redirect(['site/view_image', 'file_id' => $file_id]);
+    }
     
     public function actionRegistration($login = "", $password = "", $password2 = "") {
         $model = new RegistrationForm();

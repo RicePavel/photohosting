@@ -34,12 +34,14 @@ class FileUploadForm extends Model {
             }
             foreach ($this->imageFiles as $file) {
                 $fileName = 'file_' . mktime() . '.' . $file->getExtension();
-                $fileUserName = $file->getBaseName() . '.' . $file->getExtension();;
+                $fileUserName = $file->getBaseName() . '.' . $file->getExtension();
+                $caption = $file->getBaseName();
                 $userId = \Yii::$app->user->getId();
                 $fileAr = new Files();
                 $fileAr->user_id = $userId;
                 $fileAr->name = $fileName;
                 $fileAr->user_name = $fileUserName;
+                $fileAr->caption = $caption;
                 $ok = $fileAr->save();
                 if (!$ok) {
                     $this->addErrors($fileAr->getErrors());

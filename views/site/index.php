@@ -4,6 +4,7 @@
 
 use yii\widgets\ActiveForm;
 use app\models\FileUploadForm;
+use yii\helpers\Url;
 
 $this->title = 'My Yii Application';
 ?>
@@ -28,7 +29,7 @@ $this->title = 'My Yii Application';
             foreach ($files as $file) {
                 $path = $baseUrl . '/' . FileUploadForm::UPLOAD_DIR . '/' . $file->name;
         ?>
-                <img src='<?= $path ?>' />
+            <a href='<?= Url::to(['site/view_image', 'file_id' => $file->file_id]) ?>'><img class='indexImg' src='<?= $path ?>' /></a>
         <?php
             }
         ?>
