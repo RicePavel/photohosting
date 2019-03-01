@@ -5,6 +5,7 @@
 use yii\widgets\ActiveForm;
 use app\models\FileUploadForm;
 use yii\helpers\Url;
+use yii\helpers\Html;
 
 $this->title = 'My Yii Application';
 ?>
@@ -24,8 +25,8 @@ $this->title = 'My Yii Application';
                 $path = $baseUrl . '/' . FileUploadForm::UPLOAD_DIR . '/' . $file->name;
         ?>
                 <img class='viewOneImg' src='<?= $path ?>' />
-                <div><?= $file->caption ?></div>
-                <div><?= $file->description ?></div>
+                <div><?= Html::encode($file->caption) ?></div>
+                <div><?= Html::encode($file->description) ?></div>
                 <div>
                     
                     <a href='<?= Url::to(['site/edit_image', 'file_id' => $file->file_id]) ?>' >Редактировать</a>

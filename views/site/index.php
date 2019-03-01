@@ -5,6 +5,7 @@
 use yii\widgets\ActiveForm;
 use app\models\FileUploadForm;
 use yii\helpers\Url;
+use yii\helpers\Html;
 
 $this->title = 'My Yii Application';
 ?>
@@ -46,8 +47,8 @@ $this->title = 'My Yii Application';
                 <div><input class="multipleDeleteInput" type="checkbox" name="files[]" form="multipleDeleteForm" value="<?= $file->file_id ?>" /></div>
                 <a href='<?= Url::to(['site/view_image', 'file_id' => $file->file_id]) ?>'>
                     <img class='indexImg' src='<?= $path ?>' />
-                    <div><?= $file->caption ?></div>
-                    <div><?= strlen($file->description) < 50 ? $file->description : substr($file->description, 0, 50) . '...' ?></div>
+                    <div><?= Html::encode($file->caption) ?></div>
+                    <div><?= strlen($file->description) < 50 ? Html::encode($file->description) : substr(Html::encode($file->description), 0, 50) . '...' ?></div>
                 </a>
             </div>
         <?php
