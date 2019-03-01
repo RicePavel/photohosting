@@ -5,6 +5,10 @@ $(document).ready(function() {
         return confirm('Подтвердите удаление');
     });
     
+    $('.uploadFileForm').on('beforeSubmit', function() {
+        $(this).find('.submitButton').replaceWith('<span>Идет загрузка...</span>');
+    });
+    
     $('#multipleDeleteForm').hide();
     $('#multipleDeleteForm').on('beforeSubmit', function() {
         return confirm('Подтвердите удаление');

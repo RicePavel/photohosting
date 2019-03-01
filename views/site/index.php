@@ -13,9 +13,12 @@ $this->title = 'My Yii Application';
     <div class="body-content">
 
         <div class="row">
-            <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data'], 'action' => Url::to(['site/upload'])]); ?>
+            <?php $form = ActiveForm::begin(['options' => [
+                'enctype' => 'multipart/form-data',
+                'class' => 'uploadFileForm'
+                ], 'action' => Url::to(['site/upload'])]); ?>
                 <?= $form->field($model, 'imageFiles[]')->fileInput(['multiple' => true])->label(false) ?>
-                <button>Загрузить файлы</button>
+                <button class="submitButton">Загрузить файлы</button>
             <?php ActiveForm::end() ?>
         </div>
         <br/>

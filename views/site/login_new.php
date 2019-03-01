@@ -28,12 +28,12 @@ use yii\helpers\Url;
 
         <div class="form-group">
             <div class="col-lg-offset-1 col-lg-11">
-                <?= Html::submitButton('Войти', ['class' => 'btn', 'name' => 'login-button']) ?>
+                <?= Html::submitButton('Войти', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
             </div>
         </div>
 
     <?php ActiveForm::end(); ?>
     <br/><br>
-    <div><a class="btn btn-primary" href="<?= Url::to(['site/registration']) ?>" >Зарегистрироваться</a></div>
+    <div><a class="btn" href="<?= Url::to(['site/registration']) ?>" >Зарегистрироваться</a></div>
     
 </div>
