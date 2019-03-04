@@ -7,7 +7,7 @@ use app\models\FileUploadForm;
 use yii\helpers\Url;
 use yii\helpers\Html;
 
-$this->title = 'My Yii Application';
+$this->title = 'Photohosting';
 ?>
 <div class="site-index">
 

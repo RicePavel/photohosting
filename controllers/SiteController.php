@@ -17,6 +17,9 @@ use app\components\UploadedFiles;
 
 class SiteController extends Controller
 {
+    
+
+    
     /**
      * {@inheritdoc}
      */
@@ -72,7 +75,7 @@ class SiteController extends Controller
         $baseUrl = $this->getBaseUrl();
         $model = new \app\models\FileUploadForm();
         
-        $files = Files::getImages(\Yii::$app->user->getId(), $searchString);
+        $files = Files::getImages(Yii::$app->user->getId(), $searchString);
         return $this->render('index', ['model' => $model, 'files' => $files, 'baseUrl' => $baseUrl]);
     }
     
