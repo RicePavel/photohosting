@@ -12,9 +12,12 @@ use yii\db\ActiveRecord;
 
 class Users extends ActiveRecord implements \yii\web\IdentityInterface {
     
-    
     public static function tableName() {
         return '{{users}}';
+    }
+    
+    public function getFiles() {
+        return $this->hasMany(Files::className(), ['user_id' => 'user_id']);
     }
     
     public function rules() {
