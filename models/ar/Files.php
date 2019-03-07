@@ -34,7 +34,7 @@ class Files extends ActiveRecord {
     public static function getImages($userId, $searchString = "") {
         $sql = 'SELECT * FROM files WHERE files.user_id = :user_id ';
         $params = [':user_id' => $userId];
-        if ($searchString) {
+        if ($searchString !== "") {
             $sql .= ' and (files.caption like :searchString or files.description like :searchString) ';
             $params[':searchString'] = '%' . $searchString . '%';
         }

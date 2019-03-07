@@ -18,7 +18,7 @@ class FileUploadForm extends Model {
     
     public function rules() {
         return [
-            [['imageFiles'], 'file', 'maxFiles' => 20, 'extensions' => 'png, jpg']
+            [['imageFiles'], 'file', 'maxFiles' => 20, 'extensions' => 'png, jpg, jpeg']
         ];
     }
     

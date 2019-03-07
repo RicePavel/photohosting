@@ -13,7 +13,9 @@ use yii\helpers\Html;
 
 <div>
     
-    <?php $form = ActiveForm::begin([]); ?>
+    <?php $form = ActiveForm::begin([
+        'id' => 'registration-form'
+    ]); ?>
     
     <?= $form->field($model, 'login')->textInput() ?>
     
