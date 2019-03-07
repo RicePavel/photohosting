@@ -11,8 +11,9 @@ class UploadedFiles {
         $model = Files::getOneImage($fileId);
         $fileName = $model->name;
         $ok = $model->delete();
+        $error = '';
         if ($ok) {
-            $fullPath = \Yii::getAlias('@app') . '\\' . FileUploadForm::UPLOAD_DIR . '\\' . $fileName;
+            $fullPath = \Yii::getAlias('@app') . DIRECTORY_SEPARATOR . FileUploadForm::UPLOAD_DIR . DIRECTORY_SEPARATOR . $fileName;
             $ok = unlink($fullPath);
             if (!$ok) {
                 $error = 'Не удалось удалить файл';

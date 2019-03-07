@@ -47,7 +47,7 @@ class FileUploadForm extends Model {
                     $this->addErrors($fileAr->getErrors());
                     return false;
                 }
-                $fullPath = \Yii::getAlias('@app') . '\\' . self::UPLOAD_DIR . '\\' . $fileName;
+                $fullPath = \Yii::getAlias('@app') . DIRECTORY_SEPARATOR . self::UPLOAD_DIR . DIRECTORY_SEPARATOR . $fileName;
                 $ok = $file->saveAs($fullPath);
                 if (!$ok) {
                     $this->addError('imageFiles', 'Системная ошибка');
